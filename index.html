@@ -31,9 +31,19 @@
             left: 48%;
             border-radius: 50%;
         }
+        #controlBtn {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <button id="controlBtn">Start Animation</button>
     <div class="container">
         <img id="bat" src="bat.png" alt="Bat Not Found">
         <img id="ball" src="ball.png" alt="Ball Not Found">
@@ -41,8 +51,11 @@
     <script>
         let bat = document.getElementById("bat");
         let ball = document.getElementById("ball");
+        let controlBtn = document.getElementById("controlBtn");
         let angle = 90;
         let ballMoving = false;
+        let animationActive = false;
+        let interval;
 
         function swingBat() {
             bat.style.transform = `translate(-50%, -50%) rotateY(180deg) rotateZ(${angle}deg)`;
@@ -70,10 +83,21 @@
             }
         }
 
-        setInterval(() => {
-            swingBat();
-            setTimeout(hitBall, 200);
-        }, 1200);
+        function toggleAnimation() {
+            if (animationActive) {
+                clearInterval(interval);
+                controlBtn.textContent = "Start Animation";
+            } else {
+                interval = setInterval(() => {
+                    swingBat();
+                    setTimeout(hitBall, 200);
+                }, 1200);
+                controlBtn.textContent = "Stop Animation";
+            }
+            animationActive = !animationActive;
+        }
+
+        controlBtn.addEventListener("click", toggleAnimation);
     </script>
 </body>
 </html>
