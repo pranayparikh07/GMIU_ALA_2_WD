@@ -6,28 +6,30 @@
         body {
             overflow: hidden;
             background-color: aquamarine;
-            cursor: none;
         }
         .container {
             display: flex;
             width: 100%;
             justify-content: center;
-            background-color: aquamarine;
+            align-items: center;
+            height: 100vh;
         }
         #bat {
-            position: fixed;
-            top: 300px;
+            position: absolute;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) rotateY(180deg) rotateZ(70deg);
-            transform-origin: right center;
+            width: 100px;
+            height: auto;
+            transform: translate(-50%, -50%) rotateY(180deg) rotateZ(90deg);
+            transform-origin: right bottom;
         }
         #ball {
-            width: 50px;
-            height: 50px;
-            position: fixed;
-            top: 360px;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 70%;
+            left: 48%;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -39,34 +41,39 @@
     <script>
         let bat = document.getElementById("bat");
         let ball = document.getElementById("ball");
-        let angle = 70;
-        let ballMovingUp = false;
-        
-        function animateBat() {
-            angle = angle === 70 ? 110 : 70;
-            bat.style.transform = `translateX(-50%) rotateY(180deg) rotateZ(${angle}deg)`;
+        let angle = 90;
+        let ballMoving = false;
+
+        function swingBat() {
+            bat.style.transform = `translate(-50%, -50%) rotateY(180deg) rotateZ(${angle}deg)`;
+            angle = angle === 90 ? 60 : 90;
         }
-        
-        function animateBall() {
-            if (!ballMovingUp) {
-                ballMovingUp = true;
-                let position = 360;
+
+        function hitBall() {
+            if (!ballMoving) {
+                ballMoving = true;
+                let ballPos = 70;
+                let ballLeft = 48;
+                let velocityY = -3;
+                let velocityX = 2;
                 let interval = setInterval(() => {
-                    if (position <= 100) {
+                    if (ballPos <= 30) {
                         clearInterval(interval);
-                        ballMovingUp = false;
+                        ballMoving = false;
                     } else {
-                        position -= 10;
-                        ball.style.top = position + "px";
+                        ballPos += velocityY;
+                        ballLeft += velocityX;
+                        ball.style.top = ballPos + "%";
+                        ball.style.left = ballLeft + "%";
                     }
-                }, 50);
+                }, 30);
             }
         }
-        
+
         setInterval(() => {
-            animateBat();
-            setTimeout(animateBall, 200);
-        }, 1000);
+            swingBat();
+            setTimeout(hitBall, 200);
+        }, 1200);
     </script>
 </body>
 </html>
