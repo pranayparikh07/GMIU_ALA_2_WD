@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Cricket Animation</title>
+        <style>
+            body {
+              overflow: hidden;
+               background-color: aquamarine;
+               cursor: none ;
+            }
+            .container {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                background-color: aquamarine;
+            }
+            #bat {
+                transform: rotateY(180deg) rotateZ(70deg);
+                animation: bat 1s infinite alternate;
+                position:fixed;
+            }
+            #ball {
+                width: 50px;
+                height: 50px;
+                position: relative;
+                top: 360px;
+                left: 200px;
+                animation: ball 1s infinite alternate;
+                animation-delay: 0.2s;  
+            }
+            @keyframes bat {
+                0% {
+                    transform: rotateY(180deg) rotateZ(70deg);
+                }
+                100% {
+                    transform: rotateY(180deg) rotateZ(110deg);
+                    transform-origin: right center;
+                }
+            }
+            @keyframes ball {
+                0% {
+                    top: 403px;
+                    transform: rotate(100deg);
+                    transform: rotate(-300deg);
+                    tranform: rotate(100deg);   
+                }
+                100% {
+                    top: 100px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <img id="bat" src="bat.png" alt="Bat Not Found">
+            <img id="ball" src="ball.png" alt="Ball Not Found">
+        </div>
+    </body>
+</html>
