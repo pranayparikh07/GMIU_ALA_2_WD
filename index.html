@@ -1,58 +1,72 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Cricket Animation</title>
-        <style>
-            body {
-              overflow: hidden;
-               background-color: aquamarine;
-               cursor: none ;
+<head>
+    <title>Cricket Animation</title>
+    <style>
+        body {
+            overflow: hidden;
+            background-color: aquamarine;
+            cursor: none;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            background-color: aquamarine;
+        }
+        #bat {
+            position: fixed;
+            top: 300px;
+            left: 50%;
+            transform: translateX(-50%) rotateY(180deg) rotateZ(70deg);
+            transform-origin: right center;
+        }
+        #ball {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            top: 360px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="bat" src="bat.png" alt="Bat Not Found">
+        <img id="ball" src="ball.png" alt="Ball Not Found">
+    </div>
+    <script>
+        let bat = document.getElementById("bat");
+        let ball = document.getElementById("ball");
+        let angle = 70;
+        let ballMovingUp = false;
+        
+        function animateBat() {
+            angle = angle === 70 ? 110 : 70;
+            bat.style.transform = `translateX(-50%) rotateY(180deg) rotateZ(${angle}deg)`;
+        }
+        
+        function animateBall() {
+            if (!ballMovingUp) {
+                ballMovingUp = true;
+                let position = 360;
+                let interval = setInterval(() => {
+                    if (position <= 100) {
+                        clearInterval(interval);
+                        ballMovingUp = false;
+                    } else {
+                        position -= 10;
+                        ball.style.top = position + "px";
+                    }
+                }, 50);
             }
-            .container {
-                display: flex;
-                width: 100%;
-                justify-content: center;
-                background-color: aquamarine;
-            }
-            #bat {
-                transform: rotateY(180deg) rotateZ(70deg);
-                animation: bat 1s infinite alternate;
-                position:fixed;
-            }
-            #ball {
-                width: 50px;
-                height: 50px;
-                position: relative;
-                top: 360px;
-                left: 200px;
-                animation: ball 1s infinite alternate;
-                animation-delay: 0.2s;  
-            }
-            @keyframes bat {
-                0% {
-                    transform: rotateY(180deg) rotateZ(70deg);
-                }
-                100% {
-                    transform: rotateY(180deg) rotateZ(110deg);
-                    transform-origin: right center;
-                }
-            }
-            @keyframes ball {
-                0% {
-                    top: 403px;
-                    transform: rotate(100deg);
-                    transform: rotate(-300deg);
-                    tranform: rotate(100deg);   
-                }
-                100% {
-                    top: 100px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <img id="bat" src="bat.png" alt="Bat Not Found">
-            <img id="ball" src="ball.png" alt="Ball Not Found">
-        </div>
-    </body>
+        }
+        
+        setInterval(() => {
+            animateBat();
+            setTimeout(animateBall, 200);
+        }, 1000);
+    </script>
+</body>
 </html>
