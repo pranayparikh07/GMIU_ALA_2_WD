@@ -1,103 +1,58 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <title>Cricket Animation</title>
-    <style>
-        body {
-            overflow: hidden;
-            background-color: aquamarine;
-        }
-        .container {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        #bat {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100px;
-            height: auto;
-            transform: translate(-50%, -50%) rotateY(180deg) rotateZ(90deg);
-            transform-origin: right bottom;
-        }
-        #ball {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 70%;
-            left: 48%;
-            border-radius: 50%;
-        }
-        #controlBtn {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <button id="controlBtn">Start Animation</button>
-    <div class="container">
-        <img id="bat" src="bat.png" alt="Bat Not Found">
-        <img id="ball" src="ball.png" alt="Ball Not Found">
-    </div>
-    <script>
-        let bat = document.getElementById("bat");
-        let ball = document.getElementById("ball");
-        let controlBtn = document.getElementById("controlBtn");
-        let angle = 90;
-        let ballMoving = false;
-        let animationActive = false;
-        let interval;
-
-        function swingBat() {
-            bat.style.transform = `translate(-50%, -50%) rotateY(180deg) rotateZ(${angle}deg)`;
-            angle = angle === 90 ? 60 : 90;
-        }
-
-        function hitBall() {
-            if (!ballMoving) {
-                ballMoving = true;
-                let ballPos = 70;
-                let ballLeft = 48;
-                let velocityY = -3;
-                let velocityX = 2;
-                let interval = setInterval(() => {
-                    if (ballPos <= 30) {
-                        clearInterval(interval);
-                        ballMoving = false;
-                    } else {
-                        ballPos += velocityY;
-                        ballLeft += velocityX;
-                        ball.style.top = ballPos + "%";
-                        ball.style.left = ballLeft + "%";
-                    }
-                }, 30);
+    <head>
+        <title>Cricket Animation</title>
+        <style>
+            body {
+              overflow: hidden;
+               background-color: aquamarine;
+               cursor: none ;
             }
-        }
-
-        function toggleAnimation() {
-            if (animationActive) {
-                clearInterval(interval);
-                controlBtn.textContent = "Start Animation";
-            } else {
-                interval = setInterval(() => {
-                    swingBat();
-                    setTimeout(hitBall, 200);
-                }, 1200);
-                controlBtn.textContent = "Stop Animation";
+            .container {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                background-color: aquamarine;
             }
-            animationActive = !animationActive;
-        }
-
-        controlBtn.addEventListener("click", toggleAnimation);
-    </script>
-</body>
+            #bat {
+                transform: rotateY(180deg) rotateZ(70deg);
+                animation: bat 1s infinite alternate;
+                position:fixed;
+            }
+            #ball {
+                width: 50px;
+                height: 50px;
+                position: relative;
+                top: 360px;
+                left: 200px;
+                animation: ball 1s infinite alternate;
+                animation-delay: 0.2s;  
+            }
+            @keyframes bat {
+                0% {
+                    transform: rotateY(180deg) rotateZ(70deg);
+                }
+                100% {
+                    transform: rotateY(180deg) rotateZ(110deg);
+                    transform-origin: right center;
+                }
+            }
+            @keyframes ball {
+                0% {
+                    top: 403px;
+                    transform: rotate(100deg);
+                    transform: rotate(-300deg);
+                    tranform: rotate(100deg);   
+                }
+                100% {
+                    top: 100px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <img id="bat" src="bat.png" alt="Bat Not Found">
+            <img id="ball" src="ball.png" alt="Ball Not Found">
+        </div>
+    </body>
 </html>
